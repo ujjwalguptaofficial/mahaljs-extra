@@ -2,7 +2,7 @@ import { Component, Computed } from "mahal";
 import { initiate, mount } from "mahal-test-utils";
 import { createSandbox, spy } from "sinon";
 import { clone } from "./clone";
-import { Watch, Template } from "@mahaljs/util";
+import { Watch, Template, On } from "@mahaljs/util";
 
 @Template(`
 <div>dd</div>
@@ -14,6 +14,16 @@ export default class WatchDecorators extends Component {
 
     onInit(): void {
         window['fruitsComp'] = this;
+    }
+
+    @On('mount')
+    onMount() {
+        console.log('mounted');
+    }
+
+    @On('create')
+    onCreate() {
+        console.log('created');
     }
 
     @Computed('fruits')
@@ -47,13 +57,21 @@ export default class WatchDecorators extends Component {
 
 describe("Watch decorator", () => {
     let component: WatchDecorators;
+    let sandbox = createSandbox();
+    const consoleSpy = sandbox.spy(console, "log");
+
     before(async () => {
         component = await mount<WatchDecorators>(WatchDecorators);
     })
 
+    it('check for mounted and created', () => {
+        sandbox.assert.calledTwice(consoleSpy);
+        sandbox.assert.calledWith(consoleSpy.firstCall, 'created');
+        sandbox.assert.calledWith(consoleSpy.secondCall, 'mounted');
+        consoleSpy.restore();
+    })
 
-
-    it("initialize fruits", () => {
+    it("check for onFruitsChange & onFruitsLengthChange call", () => {
         let sandbox = createSandbox();
         const spy = sandbox.spy(console, "log");
 
