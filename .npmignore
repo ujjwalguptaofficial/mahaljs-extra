@@ -1,0 +1,6 @@
+src
+node_modules
+build_helper
+tests
+webpack
+*.tgz
