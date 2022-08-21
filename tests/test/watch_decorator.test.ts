@@ -1,9 +1,8 @@
-import { expect } from "chai";
-import { Component, Template, Computed } from "mahal";
+import { Component, Computed } from "mahal";
 import { initiate, mount } from "mahal-test-utils";
 import { createSandbox, spy } from "sinon";
 import { clone } from "./clone";
-import { Watch } from "@mahaljs/util";
+import { Watch, Template } from "@mahaljs/util";
 
 @Template(`
 <div>dd</div>
@@ -36,8 +35,13 @@ export default class WatchDecorators extends Component {
     }
 
     @Watch('fruits')
-    onFruitsChange(newValue) {
-        console.log('onFruitsChange', newValue)
+    onFruitsChange(newValue, oldValue) {
+        console.log('onFruitsChange', newValue, oldValue)
+    }
+
+    @Watch('fruitsLength')
+    onFruitsLengthChange(newValue, oldValue) {
+        console.log('onFruitsLengthChange', newValue, oldValue)
     }
 }
 
@@ -53,28 +57,10 @@ describe("Watch decorator", () => {
         let sandbox = createSandbox();
         const spy = sandbox.spy(console, "log");
 
-        // stub.calledOnce(component.onFruitsChange);
         component.initializeFruit();
-        sandbox.assert.calledOnceWithExactly(spy, 'onFruitsChange', component.initialFruits);
+        sandbox.assert.calledTwice(spy);
+        sandbox.assert.calledWith(spy.firstCall, 'onFruitsChange', component.initialFruits, []);
+        sandbox.assert.calledWith(spy.secondCall, 'onFruitsLengthChange', 4, 0);
         sandbox.restore();
-        // const promise = new Promise<void>((res) => {
-        //     // var eventId = component.watch("fruits", (newValue, oldValue) => {
-        //     //     console.log("new value", newValue);
-        //     //     expect(newValue).eql(component.initialFruits);
-        //     //     expect(oldValue).eql([]);
-        //     //     component.unwatch("fruits", eventId);
-        //     //     checkFruitValue(
-        //     //         component.initialFruits
-        //     //     )
-        //     //     res();
-        //     // });
-        //     setTimeout(() => {
-        //         sandbox.assert.calledOnce(stub);
-        //         res();
-        //         sandbox.restore();
-        //     }, 1000);
-        //     // sandbox.assert.calledOnceWithExactly(component.onFruitsChange as any, component.initialFruits, []);
-        // })
-        // return promise;
     })
 })

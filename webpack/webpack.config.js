@@ -1,35 +1,28 @@
 const path = require('path');
-const SmartBannerPlugin = require('smart-banner-webpack-plugin');
 const banner = require('../build_helper/licence');
 const nodeExternals = require('webpack-node-externals');
 const CopyPlugin = require('copy-webpack-plugin');
+const webpack = require("webpack");
 
-module.exports = [{
-    name: "mahaljs-extra",
+const nodeEnv = process.env.NODE_ENV;
+
+console.log('building for', nodeEnv);
+
+module.exports = {
+    name: "mahal-util",
     mode: process.env.NODE_ENV || 'development',
-    target: "node",
     entry: "./src/index.ts",
     devtool: 'source-map',
+    externals: {
+        mahal: 'mahal'
+    },
     output: {
         path: path.join(__dirname, "./../dist"),
-        filename: "mahaljs-extra.js",
-        library: 'mahaljs-extra',
+        filename: nodeEnv === 'development' ? "mahal-util.js" : "mahal-util.min.js",
+        library: 'mahalUtil',
         libraryTarget: "commonjs2"
     },
-    optimization: {
-        // We no not want to minimize our code.
-        minimize: false,
-        nodeEnv: false
-    },
-    node: {
-        console: false,
-        global: false,
-        process: false,
-        Buffer: false,
-        __filename: false,
-        __dirname: false,
-        NODE_ENV: false
-    },
+
     module: {
         rules: [{
             test: /\.ts$/,
@@ -43,12 +36,15 @@ module.exports = [{
         extensions: ['.ts'] // '' is needed to find modules like "jquery"
     },
     plugins: [
-        new SmartBannerPlugin(banner),
+        new webpack.BannerPlugin(banner),
         new CopyPlugin({
             patterns: [
                 { from: 'build_helper', to: '' },
             ],
         }),
+        new webpack.DefinePlugin({
+            'process.env.NODE_ENV': JSON.stringify(nodeEnv),
+        })
     ],
     externals: [nodeExternals()]
-}];
+};

@@ -1,9 +1,15 @@
-import { Component, EventBus, replaceNullProp } from "mahal";
+import { Component, replaceNullProp } from "mahal";
 
 // tslint:disable-next-line
 export const Watch = (propName: string): MethodDecorator => {
     return ((target: Component, methodName: string, descriptor: PropertyDescriptor) => {
-        replaceNullProp(target, '__watchBus__', new EventBus());
-        target.watch(propName, descriptor.value);
+        const obj = {};
+        replaceNullProp(target, '__watchers__', () => obj);
+        const watchers: { [key: string]: Map<Function, boolean> } = target['__watchers__'];
+        let savedWatcher = watchers[propName];
+        if (!savedWatcher) {
+            savedWatcher = watchers[propName] = new Map();
+        }
+        savedWatcher.set(descriptor.value, true);
     });
 };
