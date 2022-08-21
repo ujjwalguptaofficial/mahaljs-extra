@@ -53,6 +53,11 @@ export default class WatchDecorators extends Component {
     onFruitsLengthChange(newValue, oldValue) {
         console.log('onFruitsLengthChange', newValue, oldValue)
     }
+
+    @On('click')
+    onClick() {
+        console.log('click emitted');
+    }
 }
 
 describe("Watch decorator", () => {
@@ -72,13 +77,21 @@ describe("Watch decorator", () => {
     })
 
     it("check for onFruitsChange & onFruitsLengthChange call", () => {
-        let sandbox = createSandbox();
         const spy = sandbox.spy(console, "log");
 
         component.initializeFruit();
         sandbox.assert.calledTwice(spy);
         sandbox.assert.calledWith(spy.firstCall, 'onFruitsChange', component.initialFruits, []);
         sandbox.assert.calledWith(spy.secondCall, 'onFruitsLengthChange', 4, 0);
+        sandbox.restore();
+    })
+
+    it("custom event call", () => {
+        const spy = sandbox.spy(console, "log");
+
+        component.emit('click');
+        sandbox.assert.calledOnce(spy);
+        sandbox.assert.calledWith(spy.firstCall, 'click emitted');
         sandbox.restore();
     })
 })

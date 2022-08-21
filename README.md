@@ -1,1 +1,4 @@
-# mahaljs-extra
+# mahaljs-util
+
+Utility for mahaljs framework
+
