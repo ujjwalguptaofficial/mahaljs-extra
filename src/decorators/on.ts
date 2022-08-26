@@ -6,8 +6,8 @@ function on(propName: string): MethodDecorator
 function on(propName: any): MethodDecorator {
     return ((target: Component, methodName: string, descriptor: PropertyDescriptor) => {
         const obj = {};
-        replaceNullProp(target, '__events__', () => obj);
-        const watchers: { [key: string]: Map<Function, boolean> } = target['__events__'];
+        replaceNullProp(target, '_events_', () => obj);
+        const watchers: { [key: string]: Map<Function, boolean> } = target['_events_'];
         let savedWatcher = watchers[propName];
         if (!savedWatcher) {
             savedWatcher = watchers[propName] = new Map();

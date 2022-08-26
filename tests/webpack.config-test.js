@@ -18,5 +18,6 @@ module.exports = {
             'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV)
         })
     ],
+    mode: 'development',
     externals: [nodeExternals()], // in order to ignore all modules in node_modules folder
 };
