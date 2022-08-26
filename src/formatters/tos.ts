@@ -1,4 +1,4 @@
-export const toS = (value) => {
+export const toString = (value) => {
     switch (typeof value) {
         case 'string':
             return value;

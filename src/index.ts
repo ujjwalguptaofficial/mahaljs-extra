@@ -1,11 +1,4 @@
-import { Mahal, Plugin } from "mahal";
-import { toS } from "./formatterrs";
-
 export * from "./decorators";
-export * from "./formatterrs";
+export * from "./formatters";
 
-export class MahalUtilPlugin extends Plugin {
-    setup(app: Mahal, options: any) {
-        app.extend.formatter('toS', toS);
-    }
-}
+ 
