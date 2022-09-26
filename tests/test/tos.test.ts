@@ -1,5 +1,5 @@
 import { Component, Prop, Formatter, Reactive } from "mahal";
-import { Template } from "@mahaljs/util";
+import { template } from "@mahaljs/util";
 import { getMount } from "@mahaljs/test-utils";
 import { app } from "../src";
 import { expect } from "chai";
@@ -7,7 +7,7 @@ import { createRenderer } from "@mahaljs/html-compiler";
 
 app.extend.renderer = createRenderer;
 
-@Template(`
+@template(`
 <button class="btn" on:click="handleClick">{{label | toS | toUpper}}</button>
 `)
 

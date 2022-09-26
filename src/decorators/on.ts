@@ -1,9 +1,9 @@
 import { Component, replaceNullProp, TYPE_ALL_LIFE_CYCLE_EVENT } from "mahal";
 
 // tslint:disable-next-line
-function on(propName: TYPE_ALL_LIFE_CYCLE_EVENT): MethodDecorator;
-function on(propName: string): MethodDecorator
-function on(propName: any): MethodDecorator {
+export function on(propName: TYPE_ALL_LIFE_CYCLE_EVENT): MethodDecorator;
+export function on(propName: string): MethodDecorator
+export function on(propName: any): MethodDecorator {
     return ((target: Component, methodName: string, descriptor: PropertyDescriptor) => {
         const obj = {};
         replaceNullProp(target, '_events_', () => obj);
@@ -16,4 +16,3 @@ function on(propName: any): MethodDecorator {
     });
 }
 
-export const On = on;

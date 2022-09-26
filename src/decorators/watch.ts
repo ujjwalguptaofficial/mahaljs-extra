@@ -1,7 +1,7 @@
 import { Component, replaceNullProp } from "mahal";
 
 // tslint:disable-next-line
-export const Watch = (propName: string): MethodDecorator => {
+export const watch = (propName: string): MethodDecorator => {
     return ((target: Component, methodName: string, descriptor: PropertyDescriptor) => {
         const obj = {};
         replaceNullProp(target, '_watchers_', () => obj);

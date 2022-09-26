@@ -1,5 +1,5 @@
 // tslint:disable-next-line
-export const Template = (stringTemplate: string) => {
+export const template = (stringTemplate: string) => {
     // tslint:disable-next-line
     return <T extends { new(...args: any[]): {} }>(constructor: T) => {
         return class extends constructor {

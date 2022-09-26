@@ -1,11 +1,11 @@
 import { Component, Reactive } from "mahal";
-import { Template } from "@mahaljs/util";
+import { template } from "@mahaljs/util";
 
 
 class BaseComponent extends Component {
 }
 
-@Template(`
+@template(`
 <div>
     <div class="input-container">
         <input type="text" :model(name) /> 

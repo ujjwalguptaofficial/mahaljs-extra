@@ -2,9 +2,9 @@ import { Component, Computed } from "mahal";
 import { initiate, mount } from "mahal-test-utils";
 import { createSandbox, spy } from "sinon";
 import { clone } from "./clone";
-import { Watch, Template, On } from "@mahaljs/util";
+import { watch, template, on } from "@mahaljs/util";
 
-@Template(`
+@template(`
 <div>dd</div>
 `)
 export default class WatchDecorators extends Component {
@@ -16,12 +16,12 @@ export default class WatchDecorators extends Component {
         window['fruitsComp'] = this;
     }
 
-    @On('mount')
+    @on('mount')
     onMount() {
         console.log('mounted');
     }
 
-    @On('create')
+    @on('create')
     onCreate() {
         console.log('created');
     }
@@ -44,17 +44,17 @@ export default class WatchDecorators extends Component {
         this.setState('fruits', clone(this.initialFruits));
     }
 
-    @Watch('fruits')
+    @watch('fruits')
     onFruitsChange(newValue, oldValue) {
         console.log('onFruitsChange', newValue, oldValue)
     }
 
-    @Watch('fruitsLength')
+    @watch('fruitsLength')
     onFruitsLengthChange(newValue, oldValue) {
         console.log('onFruitsLengthChange', newValue, oldValue)
     }
 
-    @On('click')
+    @on('click')
     onClick() {
         console.log('click emitted');
     }
