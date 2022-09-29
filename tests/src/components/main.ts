@@ -1,14 +1,14 @@
-import { Children, Reactive, Component } from "mahal";
+import { children, reactive, Component } from "mahal";
 import Student from "./student";
 import { template } from "@mahaljs/util";
 
 @template(`<Student/>`)
-@Children({
+@children({
     Student
 })
 export default class Main extends Component {
 
-    @Reactive
+    @reactive
     flag = true
 
     onClick() {

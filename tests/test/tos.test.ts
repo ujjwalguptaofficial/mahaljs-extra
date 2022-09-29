@@ -1,4 +1,4 @@
-import { Component, Prop, Formatter, Reactive } from "mahal";
+import { Component, prop, formatter, reactive } from "mahal";
 import { template } from "@mahaljs/util";
 import { getMount } from "@mahaljs/test-utils";
 import { app } from "../src";
@@ -13,20 +13,20 @@ app.extend.renderer = createRenderer;
 
 export default class Btn extends Component {
 
-    @Prop()
+    @prop()
     label;
 
     handleClick() {
         this.emit('click');
     }
 
-    @Formatter('toUpper')
+    @formatter('toUpper')
     toUpper(value) {
         return value.toUpperCase();
     }
 }
 
-describe('tos Formatter', function () {
+describe('tos formatter', function () {
 
     let component: Component;
 

@@ -1,4 +1,4 @@
-import { Component, Reactive } from "mahal";
+import { Component, reactive } from "mahal";
 import { template } from "@mahaljs/util";
 
 
@@ -23,12 +23,12 @@ export default class extends BaseComponent {
 
     name = "";
 
-    @Reactive
+    @reactive
     students = [{
         name: 'ujjwal'
     }]
 
-    @Reactive
+    @reactive
     flag = true;
 
     addStudent() {
