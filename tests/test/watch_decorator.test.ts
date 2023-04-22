@@ -94,4 +94,9 @@ describe("Watch decorator", () => {
         sandbox.assert.calledWith(spy.firstCall, 'click emitted');
         sandbox.restore();
     })
+
+    // it('destroy', () => {
+    //     const els = component['_events_']
+    //     component.element.remove();
+    // })
 })
